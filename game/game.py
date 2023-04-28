@@ -1,49 +1,17 @@
-import time
-
-import pygame
-import sys
-from player import PLayer
+import player
 from world_objects import Bird, Cactus
 import random
+from operator import attrgetter
 
 class Game:
 
     def __init__(self, screen):
         self.screen = screen
-        self.world_objects = []
-        self.player = PLayer(screen)
+        self.world_objects = [Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)) for i in range(5)]
+        self.players = [player.PLayer(screen)]
         self.game_speed = 0.2
-        self.score = 0
-
-    def game_loop(self):
-        run = True
-
-        while run:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-
-            self.screen.fill((255, 255, 255))
-            pygame.draw.line(self.screen, (0, 0, 0), (0, 400), (900, 400))
-            score_text = pygame.font.Font('freesansbold.ttf', 30).render(f'{self.score}', False, (20, 20, 20))
-            score_text_rect = score_text.get_rect()
-            score_text_rect.center = (800, 100)
-            self.screen.blit(score_text, score_text_rect)
-
-            self.player.control()
-            self.player.draw()
-            self.generate_world()
-
-            for object in self.world_objects:
-                if object.rect.colliderect(self.player.rect):
-                        run = False
-
-            pygame.display.update()
-
-
 
     def generate_world(self):
-
         if len(self.world_objects) < 5:
             for i in range(5):
                 self.world_objects.append(Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)))
@@ -53,8 +21,23 @@ class Game:
         for object in self.world_objects:
             if object.position < -100:
                 self.world_objects.remove(object)
-                self.score += 10
-                if self.score % 100 == 0:
-                    self.game_speed += 0.05
+                for player in self.players:
+                    player.score += 10
+                if len(self.players) > 0:
+                    if self.players[0].score % 100 == 0:
+                        self.game_speed += 0.05
             object.move(self.game_speed)
             object.draw()
+
+    def get_game_state_vector(self):
+        '''
+        return list representing current game state vector
+        where:
+        list[0] - game speed
+        list[1] - distance to nearest obstacle
+        list[2] - height of nearest obstacle
+        '''
+        nearest_obstacle = min([world_object for world_object in self.world_objects if world_object.position > 30], key=attrgetter('position'))
+        return [self.game_speed, nearest_obstacle.position, nearest_obstacle.height]
+
+

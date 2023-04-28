@@ -26,6 +26,7 @@ class Cactus:
         self.position = pos
         self.rect = pygame.Rect((self.position+3, 378), (10, 20))
         self.image = pygame.image.load('static/cactus.png')
+        self.height = 0
 
     def draw(self):
         self.screen.blit(self.image, (self.position, 377))

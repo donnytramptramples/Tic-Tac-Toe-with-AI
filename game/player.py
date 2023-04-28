@@ -5,6 +5,7 @@ class PLayer:
 
     def __init__(self, screen):
         self.screen = screen
+        self.score = 0
         self.height = 0
         self.velocity = 0
         self.super_jump = 0
@@ -22,9 +23,9 @@ class PLayer:
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] and self.velocity == 0:
-            self.velocity = 0.4
-        if keys[pygame.K_SPACE] and self.velocity == 0 and self.super_jump == 0:
             self.velocity = 0.7
+        if keys[pygame.K_SPACE] and self.velocity == 0 and self.super_jump == 0:
+            self.velocity = 1.3
             self.super_jump = 50000
         if keys[pygame.K_s]:
             self.rect = pygame.Rect((30, 385 - self.height), (30, 15))
@@ -36,7 +37,7 @@ class PLayer:
             self.super_jump -= 1
 
         if self.height > 0:
-            self.velocity -= 0.001
+            self.velocity -= 0.003
         else:
             self.height = 0
             self.velocity = 0
