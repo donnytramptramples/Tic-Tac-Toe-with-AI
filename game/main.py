@@ -2,12 +2,13 @@ import time
 import pygame
 import sys
 import game
+from player import PLayer
 
 pygame.init()
 screen = pygame.display.set_mode((895, 600))
 
 while True:
-    _game = game.Game(screen)
+    _game = game.Game(screen, 1)
     run = True
     while run:
         for event in pygame.event.get():

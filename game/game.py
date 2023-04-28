@@ -5,10 +5,10 @@ from operator import attrgetter
 
 class Game:
 
-    def __init__(self, screen):
+    def __init__(self, screen, num_players):
         self.screen = screen
         self.world_objects = [Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)) for i in range(5)]
-        self.players = [player.PLayer(screen)]
+        self.players = [player.PLayer(screen, self) for i in range(num_players)]
         self.game_speed = 0.2
 
     def generate_world(self):

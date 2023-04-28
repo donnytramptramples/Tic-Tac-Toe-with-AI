@@ -1,12 +1,15 @@
 import game
 import pygame
 import sys
+from player import PLayer
 
 pygame.init()
 screen = pygame.display.set_mode((895, 600))
 
 while True:
-    _game = game.Game(screen)
+    _game = game.Game(screen, 20)
+    for player in _game.players:
+        player.create_brain(3, 3, 4)
     run = True
     while run:
         for event in pygame.event.get():
@@ -21,12 +24,11 @@ while True:
         screen.blit(score_text, score_text_rect)
 
         for player in _game.players:
-            player.control()
+            player.get_ai_move()
             player.draw()
         for object in _game.world_objects:
             if object.rect.colliderect(_game.players[0].rect):
                 run = False
 
-        print(_game.get_game_state_vector())
         _game.generate_world()
         pygame.display.update()
