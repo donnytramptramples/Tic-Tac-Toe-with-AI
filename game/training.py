@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((895, 600))
 while True:
     _game = game.Game(screen, 20)
     for player in _game.players:
-        player.create_brain(3, 3, 4)
+        player.create_brain(3, 15, 2)
     run = True
     while run:
         for event in pygame.event.get():

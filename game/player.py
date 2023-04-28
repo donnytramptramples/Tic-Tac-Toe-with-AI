@@ -59,18 +59,23 @@ class PLayer:
 
 
     def get_ai_move(self):
+        layer1 = self.brain[0]
+        layer2 = self.brain[1]
+        out_layer = self.brain[2]
+
         input = self.game.get_game_state_vector()
-        result1 = np.array([math.tan(np.dot(input, self.brain[0][i])) for i in range(self.brain[0].shape[0])] + [1])
-        result2 = np.array([math.tan(np.dot(result1, self.brain[1][i])) for i in range(self.brain[1].shape[0])] + [1])
-        final_result = np.array([math.tan(np.dot(result2, self.brain[2][i])) for i in range(self.brain[2].shape[0])] + [1])
-        output = [1 if final_result[0] > final_result[1] else 0, 1 if final_result[2] > final_result[3] else 0]
+        input = list(np.array(input).flatten()) + [1]
+
+        result1 = np.array([math.tan(np.dot(input, layer1[i])) for i in range(layer1.shape[0])] + [1])
+        result2 = np.array([math.tan(np.dot(result1, layer2[i])) for i in range(layer2.shape[0])] + [1])
+        output = np.array([math.tan(np.dot(result2, out_layer[i])) for i in range(out_layer.shape[0])])
 
         self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
         self.dimage = 0
 
-        if output[0] and self.velocity == 0:
+        if output[0] > 0 and self.velocity == 0:
             self.velocity = 0.7
-        if output[1]:
+        if output[1] > 0:
             self.rect = pygame.Rect((30, 385 - self.height), (30, 15))
             self.dimage = 3
 
