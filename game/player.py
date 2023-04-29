@@ -14,6 +14,7 @@ class PLayer:
         self.super_jump = 0
         self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
         self.game = game
+        self.brain = []
 
         self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load('static/dinoll.png'), pygame.image.load('static/dino.png'),
                        pygame.image.load('static/dinodll.png'), pygame.image.load('static/dinodrl.png'), pygame.image.load('static/dinod.png'))
@@ -86,8 +87,3 @@ class PLayer:
         else:
             self.height = 0
             self.velocity = 0
-    def create_brain(self, input_size, hidden_size, out_size):
-        layer1 = np.array([[random.uniform(-1, 1) for i in range(input_size + 1)] for j in range(hidden_size)])
-        layer2 = np.array([[random.uniform(-1, 1) for i in range(hidden_size + 1)] for j in range(hidden_size)])
-        out_layer = np.array([[random.uniform(-1, 1) for i in range(hidden_size + 1) for j in range(out_size)]])
-        self.brain = [layer1, layer2, out_layer]
