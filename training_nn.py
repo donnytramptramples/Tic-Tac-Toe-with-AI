@@ -1,7 +1,6 @@
 import game
 import pygame
 import sys
-from player import PLayer
 import numpy as np
 import random
 import pickle
@@ -14,13 +13,26 @@ population_size = 20
 num_crossover_brains = 4
 brains = []
 
-def create_brain(input_size, hidden_size, out_size):
+def create_brain(input_size=3, hidden_size=15, out_size=2):
+    '''
+    creates neural network
+    :param input_size: input vector size - default 3, same as size of vector returned by
+                                                        get_game_state_vector function from game.py
+    :param hidden_size: hidden layers size
+    :param out_size: output size - default 2, 1 for jumping and 1 for dodge
+    :return: neural network weights
+    '''
     layer1 = np.array([[random.uniform(-1, 1) for i in range(input_size + 1)] for j in range(hidden_size)])
     layer2 = np.array([[random.uniform(-1, 1) for i in range(hidden_size + 1)] for j in range(hidden_size)])
     out_layer = np.array([[random.uniform(-1, 1) for i in range(hidden_size + 1)] for j in range(out_size)])
     return [layer1, layer2, out_layer]
 
 def mutate(brain):
+    '''
+    mutates brain
+    :param brain: list of nn layers
+    :return: mutated brain
+    '''
     new = []
     for layer in brain:
         new_layer = np.copy(layer)
@@ -32,6 +44,11 @@ def mutate(brain):
     return new
 
 def create_new_pop(brains):
+    '''
+    creates new population based on brains param (best brains from previous generation)
+    :param brains: parent brains for population
+    :return: brains population of size population_size
+    '''
     new_pop = []
     for brain in brains:
         new_pop.append(brain)
