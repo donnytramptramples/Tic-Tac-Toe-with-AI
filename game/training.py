@@ -4,11 +4,12 @@ import sys
 from player import PLayer
 import numpy as np
 import random
+import pickle
 
 pygame.init()
 screen = pygame.display.set_mode((895, 600))
 
-num_of_generations = 40
+num_of_generations = 500
 population_size = 20
 num_crossover_brains = 4
 brains = []
@@ -25,8 +26,8 @@ def mutate(brain):
         new_layer = np.copy(layer)
         for i in range(new_layer.shape[0]):
             for j in range(new_layer.shape[1]):
-                if random.uniform(0, 1) < 0.1:
-                    new_layer[i][j] += random.uniform(-1, 1)*0.1
+                if random.uniform(0, 1) < 0.2:
+                    new_layer[i][j] += random.uniform(-1, 1)*0.2
         new.append(new_layer)
     return new
 
@@ -41,7 +42,6 @@ def create_new_pop(brains):
     return new_pop
 
 
-
 for i in range(num_of_generations):
 
     _game = game.Game(screen, population_size)
@@ -50,7 +50,6 @@ for i in range(num_of_generations):
             brains.append(create_brain(3, 15, 2))
     else:
         brains = create_new_pop(brains)
-        print(len(brains))
 
     for player in _game.players:
         player.brain = brains.pop()
@@ -75,12 +74,14 @@ for i in range(num_of_generations):
                 if object.rect.colliderect(player.rect) and player in _game.players:
                     _game.players.remove(player)
 
-        if len(_game.players) == num_crossover_brains:
+        if len(_game.players) <= num_crossover_brains:
             for player in _game.players:
                 brains.append(player.brain)
-            run = False
-        if len(_game.players) == 0:
             run = False
 
         _game.generate_world()
         pygame.display.update()
+
+
+with open('trained_nn.pkl', 'wb') as file:
+    pickle.dump(brains[0], file)
