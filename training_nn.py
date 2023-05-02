@@ -4,6 +4,7 @@ import sys
 import numpy as np
 import random
 import pickle
+import operator
 
 pygame.init()
 screen = pygame.display.set_mode((895, 600))
@@ -13,7 +14,7 @@ population_size = 20
 num_crossover_brains = 4
 brains = []
 
-def create_brain(input_size=5, hidden_size=15, out_size=2):
+def create_brain(input_size=5, hidden_size=3, out_size=2):
     '''
     creates neural network
     :param input_size: input vector size - default 5, same as size of vector returned by
@@ -55,7 +56,7 @@ def create_new_pop(brains):
     for brain in brains:
         new_pop.append(mutate(brain))
     for i in range(population_size - len(new_pop)):
-        new_pop.append(create_brain(5, 15, 2))
+        new_pop.append(create_brain(5, 3, 2))
     return new_pop
 
 
@@ -64,7 +65,7 @@ for i in range(num_of_generations):
     _game = Game(screen, population_size)
     if i == 0:
         for j in range(population_size):
-            brains.append(create_brain(5, 15, 2))
+            brains.append(create_brain(5, 3, 2))
     else:
         brains = create_new_pop(brains)
 
@@ -87,18 +88,18 @@ for i in range(num_of_generations):
         for player in _game.players:
             player.get_ai_move()
             player.draw()
-            for object in _game.world_objects:
+            for object in _game.obstacles:
                 if object.rect.colliderect(player.rect) and player in _game.players:
                     _game.players.remove(player)
 
-        if len(_game.players) <= num_crossover_brains:
-            for player in _game.players:
+        if len(_game.players) <= 2*num_crossover_brains:
+            _game.players.sort(key=operator.attrgetter('score'), reverse=True)
+            for player in _game.players[:num_crossover_brains]:
                 brains.append(player.brain)
             run = False
 
         _game.generate_world()
         pygame.display.update()
-
 
 with open('trained_nn.pkl', 'wb') as file:
     pickle.dump(brains[0], file)

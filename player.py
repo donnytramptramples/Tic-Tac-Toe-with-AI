@@ -94,9 +94,11 @@ class PLayer:
 
         if output[0] > 0 and self.velocity == 0:
             self.velocity = 0.7
+            self.score -= 2
         if output[1] > 0:
             self.rect = pygame.Rect((30, 385 - self.height), (30, 15))
             self.dimage = 3
+            self.score += 2
 
         self.height += self.velocity
 
