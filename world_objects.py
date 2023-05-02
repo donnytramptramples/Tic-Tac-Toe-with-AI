@@ -1,6 +1,5 @@
 import pygame
 
-
 class Bird:
     def __init__(self, screen, height, pos):
         self.screen = screen

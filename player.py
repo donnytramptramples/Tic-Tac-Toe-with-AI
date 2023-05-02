@@ -16,8 +16,10 @@ class PLayer:
         self.game = game
         self.brain = []
 
-        self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load('static/dinoll.png'), pygame.image.load('static/dino.png'),
-                       pygame.image.load('static/dinodll.png'), pygame.image.load('static/dinodrl.png'), pygame.image.load('static/dinod.png'))
+        self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load(
+            'static/dinoll.png'), pygame.image.load('static/dino.png'),
+                       pygame.image.load('static/dinodll.png'), pygame.image.load(
+            'static/dinodrl.png'), pygame.image.load('static/dinod.png'))
         self.currimg = 0
         self.dimage = 0
 
@@ -42,7 +44,7 @@ class PLayer:
             self.super_jump -= 1
 
         if self.height > 0:
-            self.velocity -= 0.003
+            self.velocity -= 0.0025
         else:
             self.height = 0
             self.velocity = 0

@@ -1,4 +1,4 @@
-import game
+from game import Game
 import pygame
 import sys
 import numpy as np
@@ -61,7 +61,7 @@ def create_new_pop(brains):
 
 for i in range(num_of_generations):
 
-    _game = game.Game(screen, population_size)
+    _game = Game(screen, population_size)
     if i == 0:
         for j in range(population_size):
             brains.append(create_brain(3, 15, 2))

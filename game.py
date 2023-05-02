@@ -9,12 +9,12 @@ class Game:
         self.screen = screen
         self.world_objects = [Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)) for i in range(5)]
         self.players = [player.PLayer(screen, self) for i in range(num_players)]
-        self.game_speed = 0.4
+        self.game_speed = 0.2
 
     def generate_world(self):
         if len(self.world_objects) < 5:
             for i in range(5):
-                self.world_objects.append(Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)))
+                self.world_objects.append(Cactus(self.screen, random.randint(900 + 200*i, 1100 + 200*i)))
             if not random.randint(0, 5):
                 self.world_objects.append(Bird(self.screen, random.randint(20, 40), random.randint(1000, 1200)))
 
