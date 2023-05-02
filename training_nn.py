@@ -13,10 +13,10 @@ population_size = 20
 num_crossover_brains = 4
 brains = []
 
-def create_brain(input_size=3, hidden_size=15, out_size=2):
+def create_brain(input_size=5, hidden_size=15, out_size=2):
     '''
     creates neural network
-    :param input_size: input vector size - default 3, same as size of vector returned by
+    :param input_size: input vector size - default 5, same as size of vector returned by
                                                         get_game_state_vector function from game.py
     :param hidden_size: hidden layers size
     :param out_size: output size - default 2, 1 for jumping and 1 for dodge
@@ -29,7 +29,7 @@ def create_brain(input_size=3, hidden_size=15, out_size=2):
 
 def mutate(brain):
     '''
-    mutates brain
+    mutates brain by adding small random values to network weights
     :param brain: list of nn layers
     :return: mutated brain
     '''
@@ -39,7 +39,7 @@ def mutate(brain):
         for i in range(new_layer.shape[0]):
             for j in range(new_layer.shape[1]):
                 if random.uniform(0, 1) < 0.2:
-                    new_layer[i][j] += random.uniform(-1, 1)*0.2
+                    new_layer[i][j] += random.uniform(-1, 1)*0.1
         new.append(new_layer)
     return new
 
@@ -55,7 +55,7 @@ def create_new_pop(brains):
     for brain in brains:
         new_pop.append(mutate(brain))
     for i in range(population_size - len(new_pop)):
-        new_pop.append(create_brain(3, 15, 2))
+        new_pop.append(create_brain(5, 15, 2))
     return new_pop
 
 
@@ -64,7 +64,7 @@ for i in range(num_of_generations):
     _game = Game(screen, population_size)
     if i == 0:
         for j in range(population_size):
-            brains.append(create_brain(3, 15, 2))
+            brains.append(create_brain(5, 15, 2))
     else:
         brains = create_new_pop(brains)
 
@@ -81,7 +81,7 @@ for i in range(num_of_generations):
         pygame.draw.line(screen, (0, 0, 0), (0, 400), (900, 400))
         score_text = pygame.font.Font('freesansbold.ttf', 30).render(f'generation {i}', False, (20, 20, 20))
         score_text_rect = score_text.get_rect()
-        score_text_rect.center = (800, 100)
+        score_text_rect.center = (700, 100)
         screen.blit(score_text, score_text_rect)
 
         for player in _game.players:
