@@ -20,7 +20,7 @@ class Game:
         self.screen = screen
         self.obstacles = [Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)) for i in range(5)]
         self.players = [player.PLayer(self) for i in range(num_players)]
-        self.game_speed = 0.2
+        self.game_speed = 0.6
 
     def generate_world(self):
         '''

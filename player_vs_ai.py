@@ -9,8 +9,13 @@ screen = pygame.display.set_mode((895, 600))
 
 while True:
     _game = game.Game(screen, 2)
-    with open('trained_nn.pkl', 'rb') as file:
-        _game.players[1].brain = pickle.load(file)
+    try:
+        with open('trained_nn.pkl', 'rb') as file:
+            _game.players[1].brain = pickle.load(file)
+    except FileNotFoundError:
+        print('Cannot find trained neural network model')
+        break
+
     run = True
     while run:
         for event in pygame.event.get():
@@ -30,7 +35,7 @@ while True:
         _game.players[1].get_ai_move()
         _game.players[1].draw()
 
-        for object in _game.world_objects:
+        for object in _game.obstacles:
             for player in _game.players:
                 if object.rect.colliderect(player.rect):
                     _game.players.remove(player)

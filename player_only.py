@@ -25,7 +25,7 @@ while True:
         for player in _game.players:
             player.control()
             player.draw()
-        for object in _game.world_objects:
+        for object in _game.obstacles:
             if object.rect.colliderect(_game.players[0].rect):
                 run = False
 
