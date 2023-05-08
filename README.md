@@ -10,19 +10,16 @@ Dino brain used to control actions is neural network with three layers, layers a
 git clone https://github.com/witek3100/ChromeDinoAI
 pip install requirements.txt
 ```
-## Project scopes 
-### 
-Run
+  
 ```
 python player_only.py
 ```
-to see how game works.
-### Train neural network 
-Run
+To see how game works.
+  
 ```
 python training_nn.py
 ```
-to see training process, you can pass optional arguments to change training parameters:  
+To see training process, you can pass optional arguments to change training parameters:  
 num_of_generations - default 500  
 population_size - default 40  
 like that:
@@ -30,8 +27,7 @@ like that:
 python training_nn.py num_of_generations=500 population_size=40
 ```
 . Afterwards result is saved to trained_nn.pkl, you'll use it in next scope.
-### play vs AI
-Run
+  
 ```
 python player_vs_ai.py
 ```
