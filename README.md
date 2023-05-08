@@ -16,7 +16,6 @@ python player_only.py
 ```
 To see how game works.
 _______________________________________________________
-_______________________________________________________
 ```
 python training_nn.py
 ```
@@ -28,7 +27,6 @@ like that:
 python training_nn.py num_of_generations=500 population_size=40
 ```
 . Afterwards result is saved to trained_nn.pkl, you'll use it in next scope.
-_______________________________________________________
 _______________________________________________________
 ```
 python player_vs_ai.py
