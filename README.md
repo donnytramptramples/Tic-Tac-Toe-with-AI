@@ -11,11 +11,14 @@ git clone https://github.com/witek3100/ChromeDinoAI
 pip install requirements.txt
 ```
 <br/><br/>
+_______________________________________________________
 ```
 python player_only.py
 ```
 To see how game works.
+_______________________________________________________
 <br/><br/>
+_______________________________________________________
 ```
 python training_nn.py
 ```
@@ -27,8 +30,11 @@ like that:
 python training_nn.py num_of_generations=500 population_size=40
 ```
 . Afterwards result is saved to trained_nn.pkl, you'll use it in next scope.
+_______________________________________________________
 <br/><br/>
+_______________________________________________________
 ```
 python player_vs_ai.py
 ```
 to challange saved model.
+_______________________________________________________
