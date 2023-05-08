@@ -18,7 +18,7 @@ class Game:
 
     def __init__(self, screen, num_players):
         self.screen = screen
-        self.obstacles = [Cactus(self.screen, random.randint(900 + 200*i, 1500 + 200*i)) for i in range(5)]
+        self.obstacles = [Cactus(self.screen, 900), Cactus(self.screen, 1400)]
         self.players = [player.PLayer(self) for i in range(num_players)]
         self.game_speed = 0.6
 
@@ -26,9 +26,9 @@ class Game:
         '''
         randomly creates new obstacles
         '''
-        if len(self.obstacles) < 5:
+        if len(self.obstacles) < 3:
             for i in range(5):
-                self.obstacles.append(Cactus(self.screen, random.randint(900 + 200*i, 1100 + 200*i)))
+                self.obstacles.append(Cactus(self.screen, random.randint(900 + 1000 * i, 1500 + 1000*i)))
             if not random.randint(0, 5):
                 self.obstacles.append(Bird(self.screen, random.randint(1000, 1200)))
 
@@ -37,6 +37,7 @@ class Game:
                 self.obstacles.remove(object)
                 for player in self.players:
                     player.score += 10
+                    player.fitness_score += 10
                 if len(self.players) > 0:
                     if self.players[0].score % 100 == 0:
                         self.game_speed += 0.05

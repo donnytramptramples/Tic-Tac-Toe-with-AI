@@ -10,11 +10,11 @@ pygame.init()
 screen = pygame.display.set_mode((895, 600))
 
 num_of_generations = 500
-population_size = 20
+population_size = 50
 num_crossover_brains = 4
 brains = []
 
-def create_brain(input_size=5, hidden_size=3, out_size=2):
+def create_brain(input_size=5, hidden_size=3, out_size=1):
     '''
     creates neural network
     :param input_size: input vector size - default 5, same as size of vector returned by
@@ -39,8 +39,8 @@ def mutate(brain):
         new_layer = np.copy(layer)
         for i in range(new_layer.shape[0]):
             for j in range(new_layer.shape[1]):
-                if random.uniform(0, 1) < 0.2:
-                    new_layer[i][j] += random.uniform(-1, 1)*0.1
+                if random.uniform(0, 1) < 0.03:
+                    new_layer[i][j] += random.uniform(-1, 1)
         new.append(new_layer)
     return new
 
@@ -53,19 +53,20 @@ def create_new_pop(brains):
     new_pop = []
     for brain in brains:
         new_pop.append(brain)
-    for brain in brains:
-        new_pop.append(mutate(brain))
-    for i in range(population_size - len(new_pop)):
-        new_pop.append(create_brain(5, 3, 2))
+    for i in range(population_size-len(brains)-2):
+        new_pop.append(mutate(brains[random.randint(0, 1)]))
+    for i in range(2):
+        new_pop.append(create_brain(5, 3, 1))
     return new_pop
 
 
+max_score = 0
 for i in range(num_of_generations):
 
     _game = Game(screen, population_size)
     if i == 0:
         for j in range(population_size):
-            brains.append(create_brain(5, 3, 2))
+            brains.append(create_brain(5, 3, 1))
     else:
         brains = create_new_pop(brains)
 
@@ -80,9 +81,15 @@ for i in range(num_of_generations):
 
         screen.fill((255, 255, 255))
         pygame.draw.line(screen, (0, 0, 0), (0, 400), (900, 400))
-        score_text = pygame.font.Font('freesansbold.ttf', 30).render(f'generation {i}', False, (20, 20, 20))
+
+        generation_text = pygame.font.Font('freesansbold.ttf', 30).render(f'generation {i}', False, (20, 20, 20))
+        generation_text_rect = generation_text.get_rect()
+        generation_text_rect.center = (700, 100)
+        screen.blit(generation_text, generation_text_rect)
+
+        score_text = pygame.font.Font('freesansbold.ttf', 30).render(f'max score {max_score}', False, (20, 20, 20))
         score_text_rect = score_text.get_rect()
-        score_text_rect.center = (700, 100)
+        score_text_rect.center = (700, 150)
         screen.blit(score_text, score_text_rect)
 
         for player in _game.players:
@@ -92,10 +99,15 @@ for i in range(num_of_generations):
                 if object.rect.colliderect(player.rect) and player in _game.players:
                     _game.players.remove(player)
 
-        if len(_game.players) <= 2*num_crossover_brains:
-            _game.players.sort(key=operator.attrgetter('score'), reverse=True)
-            for player in _game.players[:num_crossover_brains]:
-                brains.append(player.brain)
+        if len(_game.players) <= 4:
+            _game.players.sort(key=operator.attrgetter('fitness_score'), reverse=True)
+            best = _game.players[0]
+            brains.append(_game.players[0].brain)
+            brains.append(_game.players[1].brain)
+            # for player in _game.players[:num_crossover_brains]:
+            #     brains.append(player.brain)
+            if best.score > max_score:
+                max_score = best.score
             run = False
 
         _game.generate_world()

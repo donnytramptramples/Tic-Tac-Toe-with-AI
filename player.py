@@ -34,6 +34,7 @@ class PLayer:
             'static/dinodrl.png'), pygame.image.load('static/dinod.png'))
         self.currimg = 0
         self.dimage = 0
+        self.fitness_score = 0
 
 
     def control(self):
@@ -92,13 +93,14 @@ class PLayer:
         self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
         self.dimage = 0
 
-        if output[0] > 0 and self.velocity == 0:
+        if output[0] > 200 and self.velocity == 0:
             self.velocity = 0.7
-            self.score -= 2
-        if output[1] > 0:
+        elif output[0] < -100:
             self.rect = pygame.Rect((30, 385 - self.height), (30, 15))
             self.dimage = 3
-            self.score += 2
+        else:
+            self.fitness_score += 10
+            pass
 
         self.height += self.velocity
 
