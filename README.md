@@ -26,7 +26,7 @@ like that:
 ```
 python training_nn.py num_of_generations=500 population_size=40
 ```
-. Afterwards result is saved to trained_nn.pkl, you'll use it in next scope.
+Afterwards result is saved to trained_nn.pkl.
 _______________________________________________________
 ```
 python player_vs_ai.py
