@@ -73,29 +73,13 @@ class PLayer:
         self.game.screen.blit(image, (30, 375 - self.height))
 
 
-    def get_ai_move(self):
-        '''
-        controling player movement using neural network
-        brain gets input vector from get_game_state_vector function and computes output vector
-        whose first position controls jumping and second dodgeing
-        '''
-        layer1 = self.brain[0]
-        layer2 = self.brain[1]
-        out_layer = self.brain[2]
+    def get_move(self):
+        input = np.array(self.game.get_game_state_vector())
+        output = self.brain.predict(np.atleast_2d(input))
 
-        input = self.game.get_game_state_vector()
-        input = list(np.array(input).flatten()) + [1]
-
-        result1 = np.array([math.tan(np.dot(input, layer1[i])) for i in range(layer1.shape[0])] + [1])
-        result2 = np.array([math.tan(np.dot(result1, layer2[i])) for i in range(layer2.shape[0])] + [1])
-        output = np.array([math.tan(np.dot(result2, out_layer[i])) for i in range(out_layer.shape[0])])
-
-        self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
-        self.dimage = 0
-
-        if output[0] > 200 and self.velocity == 0:
+        if output[0] > 0.5 and self.velocity == 0:
             self.velocity = 0.7
-        elif output[0] < -100:
+        elif output[0] < 0.5:
             self.rect = pygame.Rect((30, 385 - self.height), (30, 15))
             self.dimage = 3
         else:
