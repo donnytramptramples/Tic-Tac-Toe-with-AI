@@ -1,6 +1,9 @@
 import math
 import pygame
 import numpy as np
+from model import Model
+import torch
+
 
 class PLayer:
     '''
@@ -21,13 +24,14 @@ class PLayer:
         dimage (int): variable controling player animation
     '''
 
-    def __init__(self, game):
+    def __init__(self, game, weights):
         self.score = 0
         self.height = 0
         self.velocity = 0
         self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
         self.game = game
-        self.brain = []
+        self.brain = Model()
+        self.brain.load_state_dict(weights)
         self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load(
             'static/dinoll.png'), pygame.image.load('static/dino.png'),
                        pygame.image.load('static/dinodll.png'), pygame.image.load(
