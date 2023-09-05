@@ -9,6 +9,7 @@ import torch
 import pygad.torchga
 from model import Model
 from multiprocessing import Process
+from genetic_algorithm import GeneticAlgorithm
 
 
 # CONFIG
@@ -25,7 +26,7 @@ model = Model()
 torch_ga = pygad.torchga.TorchGA(model=model, num_solutions=config.NUM_SOLUTIONS)
 initial_population = torch_ga.population_weights
 
-def fitness_function(ga_instance, solution, solution_index):
+def fitness_function(solution):
     model_weights_dict = torchga.model_weights_as_dict(model=model, weights_vector=solution)
     player = PLayer(game, model_weights_dict)
     score = 0
@@ -49,19 +50,5 @@ def fitness_function(ga_instance, solution, solution_index):
         pygame.display.update()
 
 
-def callback_generation(ga_instance):
-    print("Generation = {generation}".format(generation=ga_instance.generations_completed))
-    print("Fitness    = {fitness}".format(fitness=ga_instance.best_solution()[1]))
-
-
-ga_instance = pygad.GA(
-    num_generations=config.NUM_GENERATIONS,
-    num_parents_mating=config.NUM_PARENTS_MATING,
-    initial_population=initial_population,
-    fitness_func=fitness_function,
-    on_generation=callback_generation,
-    delay_after_gen=0.05
-)
-ga_instance.run()
-
-
+ga = GeneticAlgorithm(fitness_function, initial_population)
+ga.run()
