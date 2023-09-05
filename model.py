@@ -6,7 +6,6 @@ class Model(torch.nn.Module):
         self.input = torch.nn.Linear(5, 10)
         self.relu = torch.nn.ReLU()
         self.hidden = torch.nn.Linear(10, 5)
-        self.relu = torch.nn.ReLU()
         self.output = torch.nn.Linear(5, 1)
         self.af = torch.nn.Sigmoid()
 

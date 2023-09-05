@@ -78,8 +78,8 @@ class PLayer:
 
 
     def get_move(self):
-        input = np.array(self.game.get_game_state_vector())
-        output = self.brain.predict(np.atleast_2d(input))
+        input = torch.tensor((self.game.get_game_state_vector()))
+        output = self.brain(input)
 
         if output[0] > 0.5 and self.velocity == 0:
             self.velocity = 0.7
