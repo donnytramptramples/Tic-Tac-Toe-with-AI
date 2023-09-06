@@ -35,7 +35,7 @@ class GeneticAlgorithm:
     def get_generation_scores(self):
         self.game.players = [Player(self.game, torchga.model_weights_as_dict(model=Model(), weights_vector=weights)) for weights in self.population]
 
-        self.game.game_speed = 1.5
+        self.game.game_speed = 2.5
 
         while True:
             for event in pygame.event.get():

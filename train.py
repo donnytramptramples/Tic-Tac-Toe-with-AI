@@ -8,7 +8,7 @@ from genetic_algorithm import GeneticAlgorithm
 # CONFIG
 class Config():
     NUM_SOLUTIONS = 50
-    NUM_GENERATIONS = 200
+    NUM_GENERATIONS = 20
     NUM_PARENTS_MATING = 5
 
 

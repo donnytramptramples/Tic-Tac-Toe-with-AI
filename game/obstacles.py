@@ -25,7 +25,7 @@ class Bird(Obstacle):
         super().__init__(screen, pos)
         self.height = random.randint(20, 40)
         self.rect = pygame.Rect((self.position - 2, 402 - self.height), (20, 20))
-        self.images = (pygame.image.load(os.path.join(os.getcwd(), '/game/static/bird1.png')), pygame.image.load(os.path.join(os.getcwd(), '/game/static/bird2.png')))
+        self.images = (pygame.image.load(f'{os.getcwd()}/game/static/bird1.png'), pygame.image.load(f'{os.getcwd()}/game/static/bird2.png'))
         self.currimg = 0
 
 
