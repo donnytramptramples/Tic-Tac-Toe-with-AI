@@ -5,7 +5,7 @@ from model import Model
 import torch
 
 
-class PLayer:
+class Player:
     '''
     class representing player
 
@@ -24,14 +24,15 @@ class PLayer:
         dimage (int): variable controling player animation
     '''
 
-    def __init__(self, game, weights):
+    def __init__(self, game, weights=None):
         self.score = 0
         self.height = 0
         self.velocity = 0
         self.rect = pygame.Rect((33, 375 - self.height), (20, 25))
         self.game = game
         self.brain = Model()
-        self.brain.load_state_dict(weights)
+        if weights:
+            self.brain.load_state_dict(weights)
         self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load(
             'static/dinoll.png'), pygame.image.load('static/dino.png'),
                        pygame.image.load('static/dinodll.png'), pygame.image.load(
@@ -75,6 +76,7 @@ class PLayer:
             self.currimg = abs(self.currimg-1)
 
         self.game.screen.blit(image, (30, 375 - self.height))
+        pygame.display.update()
 
 
     def get_move(self):

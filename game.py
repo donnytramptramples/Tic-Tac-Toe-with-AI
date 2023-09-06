@@ -25,7 +25,7 @@ class Game:
         self.screen = pygame.display.set_mode((895, 600))
         self.obstacles = [Cactus(self.screen, 900), Cactus(self.screen, 1400)]
         self.players = []
-        self.game_speed = 0.3
+        self.game_speed = 2.5
 
     def game_loop(self):
 
@@ -85,8 +85,11 @@ class Game:
 
     def generate_world(self):
         '''
-        randomly creates new obstacles
+        generating and drawing world
         '''
+        self.screen.fill((255, 255, 255))
+        pygame.draw.line(self.screen, (0, 0, 0), (0, 400), (900, 400))
+
         if len(self.obstacles) < 3:
             for i in range(5):
                 self.obstacles.append(Cactus(self.screen, random.randint(900 + 1000 * i, 1500 + 1000*i)))
@@ -104,6 +107,8 @@ class Game:
                         self.game_speed += 0.05
             object.move(self.game_speed)
             object.draw()
+
+        pygame.display.update()
 
     def get_game_state_vector(self):
         '''
