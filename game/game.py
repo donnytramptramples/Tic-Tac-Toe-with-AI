@@ -1,10 +1,8 @@
-import player
-from obstacles import Bird, Cactus
+from game.obstacles import Bird, Cactus
 import random
 from operator import attrgetter
 import pygame
 import sys
-import time
 
 
 class Game:
@@ -25,7 +23,7 @@ class Game:
         self.screen = pygame.display.set_mode((895, 600))
         self.obstacles = [Cactus(self.screen, 900), Cactus(self.screen, 1400)]
         self.players = []
-        self.game_speed = 2.5
+        self.game_speed = 1.0
 
     def game_loop(self):
 
@@ -96,17 +94,15 @@ class Game:
             if not random.randint(0, 5):
                 self.obstacles.append(Bird(self.screen, random.randint(1000, 1200)))
 
-        for object in self.obstacles:
-            if object.position < -100:
-                self.obstacles.remove(object)
-                for player in self.players:
-                    player.score += 10
-                    player.fitness_score += 10
-                if len(self.players) > 0:
-                    if self.players[0].score % 100 == 0:
-                        self.game_speed += 0.05
-            object.move(self.game_speed)
-            object.draw()
+        for obstacle in self.obstacles:
+            if obstacle.position < -100:
+                self.obstacles.remove(obstacle)
+            obstacle.move(self.game_speed)
+            obstacle.draw()
+
+        for player in self.players:
+            player.draw()
+            player.score += 0.01
 
         pygame.display.update()
 

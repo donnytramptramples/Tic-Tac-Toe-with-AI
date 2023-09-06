@@ -3,6 +3,7 @@ import pygame
 import numpy as np
 from model import Model
 import torch
+import os
 
 
 class Player:
@@ -33,10 +34,14 @@ class Player:
         self.brain = Model()
         if weights:
             self.brain.load_state_dict(weights)
-        self.images = (pygame.image.load('static/dinorl.png'), pygame.image.load(
-            'static/dinoll.png'), pygame.image.load('static/dino.png'),
-                       pygame.image.load('static/dinodll.png'), pygame.image.load(
-            'static/dinodrl.png'), pygame.image.load('static/dinod.png'))
+        self.images = (
+            pygame.image.load(f'{os.getcwd()}\game\static\dinorl.png'),
+            pygame.image.load(f'{os.getcwd()}\game\static\dinoll.png'),
+            pygame.image.load(f'{os.getcwd()}\game\static\dino.png'),
+            pygame.image.load(f'{os.getcwd()}\game\static\dinodll.png'),
+            pygame.image.load(f'{os.getcwd()}\game\static\dinodrl.png'),
+            pygame.image.load(f'{os.getcwd()}\game\static\dinod.png')
+        )
         self.currimg = 0
         self.dimage = 0
         self.fitness_score = 0
@@ -76,7 +81,6 @@ class Player:
             self.currimg = abs(self.currimg-1)
 
         self.game.screen.blit(image, (30, 375 - self.height))
-        pygame.display.update()
 
 
     def get_move(self):
