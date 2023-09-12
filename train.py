@@ -7,11 +7,9 @@ from genetic_algorithm import GeneticAlgorithm
 
 # CONFIG
 class Config():
-    NUM_SOLUTIONS = 50
+    NUM_SOLUTIONS = 40
     NUM_GENERATIONS = 20
-    NUM_PARENTS_MATING = 5
-
-
+    NUM_PARENTS_MATING = 2
 config = Config()
 
 game = Game()

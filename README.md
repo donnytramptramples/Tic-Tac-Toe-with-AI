@@ -1,5 +1,5 @@
 # ChromeDinoAI
-Purpose of the project is to train pytorch model to playchrome dino game using own implementation of genetic algorithm.
+Purpose of the project is to train pytorch model to play chrome dino game using own implementation of genetic algorithm.
 ### Project structure
 <pre>
 ├── game    # game files
@@ -16,8 +16,7 @@ Purpose of the project is to train pytorch model to playchrome dino game using o
 ### How to run
 TODO
 ### Model
-As the task is not especially hard model used is quite simple. Input consists of 5 neurons, then fully connected 10-neurons hidden layer, both with relu activation. At the output there is one neuron (also fully connected), because task is just a binary classification (jump or dodge) it uses sigmoid activation.
-TODO
+As the task is not especially hard model used is quite simple. Input consists of 5 neurons, then fully connected 10-neurons hidden layer with relu activation. At the output there is one neuron (also fully connected), because task is just a binary classification (jump or dodge) it uses sigmoid activation.
 ### Training
-TODO
+
 
